@@ -17,9 +17,9 @@ router.post('/register', validate(userRegisterSchema), async (req: Request, res:
     }
 
     const user = await userModel.createUser(email, password, first_name, last_name);
-    const token = jwt.sign(
+    const token = (jwt.sign as any)(
       { userId: user.id, email: user.email, role: user.role },
-      process.env.JWT_SECRET!,
+      (process.env.JWT_SECRET as string) || 'your-secret-key',
       { expiresIn: process.env.JWT_EXPIRY || '7d' }
     );
 
@@ -53,9 +53,9 @@ router.post('/login', validate(userLoginSchema), async (req: Request, res: Respo
       return res.status(401).json({ success: false, error: 'Invalid email or password' });
     }
 
-    const token = jwt.sign(
+    const token = (jwt.sign as any)(
       { userId: user.id, email: user.email, role: user.role },
-      process.env.JWT_SECRET!,
+      (process.env.JWT_SECRET as string) || 'your-secret-key',
       { expiresIn: process.env.JWT_EXPIRY || '7d' }
     );
 

@@ -13,13 +13,12 @@ lerna-debug.log*
 *.swp
 *.swo
 *~
-.DS_Store
 
 # Build
-dist/
-build/
-.next/
-out/
+/backend/dist/
+/backend/build/
+/frontend/.next/
+/frontend/out/
 
 # Environment
 .env
